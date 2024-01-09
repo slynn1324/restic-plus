@@ -1,0 +1,59 @@
+[global]
+$RESTIC_PACK_SIZE = 64
+verbose
+limit-upload = 3000
+
+[global.backup]
+$TMPDIR = /dev/shm
+
+
+
+# targets
+[@wasabi]
+$AWS_ACCESS_KEY_ID = <id>
+$AWS_SECRET_ACCESS_KEY = <secret>
+$RESTIC_PASSWORD = <password>
+
+[@b2]
+$AWS_ACCESS_KEY_ID = <id>
+$AWS_SECRET_ACCESS_KEY = <secret>
+$RESTIC_PASSWORD = <password>
+
+
+
+# sources
+[apps@]
+paths = /path/to/apps
+
+[docs@]
+paths = /path/to/docs
+
+
+
+# jobs
+[apps@wasabi]
+repo = <url>
+max-size: 60G
+
+[docs@wasabi]
+repo = <url>
+max-size = 10G
+
+[apps@b2]
+repo = <url>
+
+[docs@b2]
+repo = <url>
+
+
+# groups
+[group.wasabi]
+jobs = 
+	apps@wasabi
+	docs@wasabi
+
+[group.b2]
+jobs = 
+	apps@b2
+	docs@b2
+
