@@ -269,6 +269,7 @@ def main():
 			run_job(args.job)
 		except Exception as e:
 			print(e, file=sys.stderr)
+			sys.exit(1)
 
 	else:
 		# its a group
@@ -278,6 +279,8 @@ def main():
 			print("action '{}' is not allowed on a group.  Supported actions: backup, check, snapshots".format(args.action))
 			sys.exit(1)
 
+		error_count = 0
+
 		for job in group_config['jobs']:
 			try:
 				print("Running job: {}".format(job))
@@ -285,6 +288,9 @@ def main():
 				print("\n")
 			except Exception as e:
 				print("error running job {}: {}\n\n".format(job, e), file=sys.stderr)
+				error_count = error_count + 1
 
+		if error_count > 0:
+			sys.exit(1)
 
 main()
