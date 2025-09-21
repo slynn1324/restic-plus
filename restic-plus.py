@@ -61,7 +61,7 @@ def create_epilog():
 
 	rval += "Groups:\n"
 	for k in config_parser:
-		if re.match("group\..+", k):
+		if re.match("group[.].+", k):
 			rval += "    " + k + "\n"
 	rval += "\n"
 	
